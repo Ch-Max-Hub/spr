@@ -1,6 +1,4 @@
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate
-from django.core.exceptions import ValidationError
 
 
 class CustomAuthenticationForm(AuthenticationForm):

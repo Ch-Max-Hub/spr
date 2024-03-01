@@ -17,15 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
-from django.views.generic.base import TemplateView
 
 from .forms import CustomAuthenticationForm
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('main.urls')),
+    path('', include('main.urls')),
     path('accounts/login/', auth_views.LoginView.as_view(authentication_form=CustomAuthenticationForm), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
 ]

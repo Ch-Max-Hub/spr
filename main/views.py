@@ -1,9 +1,46 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.shortcuts import render
+
+from .models import CustomUser, Etrap
 
 
-class SignUpView(CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy("login")
-    template_name = "registration/signup.html"
+def index(request):
+    user: CustomUser = request.user
+    etraplar = Etrap.objects.all()
+    context = {
+        'title': '09',
+    }
+    return render(request, 'index.html', context=context)
+
+
+def etraps(request):
+    context = {
+        'title': '09 | Etraplar',
+    }
+    return render(request, 'index.html', context=context)
+
+
+def users(request):
+    context = {
+        'title': '09 | Ulanyjylar',
+    }
+    return render(request, 'index.html', context=context)
+
+
+def add_info(request):
+    context = {
+        'title': '09 | Maglumat goş',
+    }
+    return render(request, 'index.html', context=context)
+
+
+def add_info_file(request):
+    context = {
+        'title': '09 | Maglumat file ýükle',
+    }
+    return render(request, 'index.html', context=context)
+
+
+def dark_mode(request, turn_on):
+    if turn_on == 0: request.session['dark_mode'] = False
+    if turn_on == 1: request.session['dark_mode'] = True
+    return render(request, 'index.html')
