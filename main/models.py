@@ -30,11 +30,11 @@ class Client(models.Model):
     name = models.CharField('Ady', max_length=100)
     street = models.CharField('Köçe', max_length=100)
     house = models.CharField('Jaý', max_length=10)
-    bloc = models.CharField('D/B', max_length=20)
-    room = models.CharField('Otag', max_length=10)
-    service = models.IntegerField('Hyzmat')
-    old_number = models.CharField('Köne nomer', max_length=20)
-    status = models.CharField('Status', max_length=100)
+    bloc = models.CharField('D/B', max_length=20, blank=True, null=True)
+    room = models.CharField('Otag', max_length=10, blank=True, null=True)
+    service = models.IntegerField('Hyzmat', blank=True, null=True)
+    old_number = models.CharField('Köne nomer', max_length=20, blank=True, null=True)
+    status = models.CharField('Status', max_length=100, blank=True, null=True)
     etrap = models.ForeignKey(Etrap, on_delete=models.PROTECT)
 
     class Meta:

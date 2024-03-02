@@ -16,23 +16,32 @@
                             <table class="datatable-init table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                        <th class="nk-tb-col nk-tb-col-tools text-end"></th>
+                                        <th>Nomer</th>
+                                        <th>Ady</th>
+                                        <th>Etrap</th>
+                                        <th>Köçe</th>
+                                        <th>Jaý</th>
+                                        <th>Korp</th>
+                                        <th>Otag</th>
+                                        <th>Hyzmat</th>
+                                        <th>D/B</th>
+                                        <th>Statusy</th>
+                                        <th class="nk-tb-col nk-tb-col-tools text-end">Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for cli in clients %}
                                     <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
+                                        <td>{{ cli.number }}</td>
+                                        <td>{{ cli.name }}</td>
+                                        <td>{{ cli.etrap }}</td>
+                                        <td>{{ cli.street }}</td>
+                                        <td>{{ cli.house }}</td>
+                                        <td>{{ cli.bloc|default:'' }}</td>
+                                        <td>{{ cli.room|default:'' }}</td>
+                                        <td>{{ cli.service|default:'' }}</td>
+                                        <td>{{ cli.old_number|default:'' }}</td>
+                                        <td>{{ cli.status|default:'' }}</td>
                                         <td class="nk-tb-col nk-tb-col-tools">
                                             <ul class="nk-tb-actions gx-1">
                                                 <li>
@@ -55,6 +64,7 @@
                                             </ul>
                                         </td>
                                     </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

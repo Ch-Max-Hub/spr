@@ -1,13 +1,22 @@
 from django.shortcuts import render
 
-from .models import CustomUser, Etrap
+from .models import Client, CustomUser, Etrap
 
 
 def index(request):
     user: CustomUser = request.user
-    etraplar = Etrap.objects.all()
+    if user.is_superuser:
+        # Superuser can see all clients
+        clients = Client.objects.all()
+    # elif user.groups.filter(name='Admin').exists():
+    else:
+        # Operator can see clients only from their etrap
+        clients = Client.objects.filter(etrap=user.etrap)
+    print(user)
+    print(clients[0])
     context = {
         'title': '09',
+        'clients': clients,
     }
     return render(request, 'index.html', context=context)
 
