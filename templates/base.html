@@ -94,7 +94,7 @@
                                             <ul class="link-list">
                                                 {% comment %} <li><a href="html/user-profile-regular.html"><em class="icon ni ni-user-alt"></em><span>View Profile</span></a></li> {% endcomment %}
                                                 <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
-                                                <li><a href="#"><em class="icon ni ni-signout"></em><span>Sign out</span></a></li>
+                                                <li><a href="{% url 'logout' %} " id="logout-link"><em class="icon ni ni-signout"></em><span>Sign out</span></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -126,6 +126,27 @@
     <script src="./assets/js/bundle.js?ver=3.1.2"></script>
     <script src="./assets/js/scripts.js?ver=3.1.2"></script>
     <script src="./assets/js/charts/gd-invest.js?ver=3.1.2"></script>
+    <script>
+        document.getElementById("logout-link").addEventListener("click", function(event) {
+          event.preventDefault(); // Prevent default anchor behavior
+          
+          // Create a form
+          var form = document.createElement("form");
+          form.setAttribute("method", "post");
+          form.setAttribute("action", "{% url 'logout' %}");
+        
+          // Add CSRF token
+          var csrfInput = document.createElement("input");
+          csrfInput.setAttribute("type", "hidden");
+          csrfInput.setAttribute("name", "csrfmiddlewaretoken");
+          csrfInput.setAttribute("value", "{{ csrf_token }}");
+          form.appendChild(csrfInput);
+        
+          // Append form to body and submit
+          document.body.appendChild(form);
+          form.submit();
+        });
+    </script>
 </body>
 
 </html>

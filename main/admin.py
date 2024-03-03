@@ -14,9 +14,9 @@ class ClientAdmin(admin.ModelAdmin):
     list_filter = ('service', 'status', 'etrap_id')
 
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'username', 'email', 'etrap')
-    list_display_links = ('username', 'email')
-    search_fields = ('username', 'email', 'etrap__etrap_name')
+    list_display = ('username', 'first_name', 'last_name', 'is_active', 'etrap')
+    list_display_links = ('username', 'first_name', 'last_name', 'is_active')
+    search_fields = ('username', 'first_name', 'last_name', 'is_active', 'etrap__etrap_name')
     list_filter = ('etrap',)
 
 admin.site.register(Etrap, EtrapAdmin)
