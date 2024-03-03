@@ -1,21 +1,25 @@
+from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render
 
-from .models import Client, CustomUser, Etrap
+from .models import Client, UserEtrap, Etrap
 
 
 def index(request):
-    user: CustomUser = request.user
+    user: User = request.user
     if user.is_superuser:
         # Superuser can see all clients
         clients = Client.objects.all()
-    # elif user.groups.filter(name='Admin').exists():
     else:
         # Operator can see clients only from their etrap
-        clients = Client.objects.filter(etrap=user.etrap)
-    print(user)
-    print(clients[0])
+        try:
+            _user = UserEtrap.objects.get(user=user)
+            clients = Client.objects.filter(Q(etrap=_user.etrap) | Q(etrap__parent=_user.etrap))
+        except UserEtrap.DoesNotExist:
+            clients = []
     context = {
         'title': '09',
+        'user': user,
         'clients': clients,
     }
     return render(request, 'index.html', context=context)
