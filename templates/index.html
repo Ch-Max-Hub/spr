@@ -34,9 +34,9 @@
                                     <tr>
                                         <td>{{ cli.number }}</td>
                                         <td>{{ cli.name }}</td>
-                                        <td>{{ cli.etrap }}</td>
-                                        <td>{{ cli.street }}</td>
-                                        <td>{{ cli.house }}</td>
+                                        <td>{{ cli.etrap|default:'' }}</td>
+                                        <td>{{ cli.street|default:'' }}</td>
+                                        <td>{{ cli.house|default:'' }}</td>
                                         <td>{{ cli.bloc|default:'' }}</td>
                                         <td>{{ cli.room|default:'' }}</td>
                                         <td>{{ cli.service|default:'' }}</td>
