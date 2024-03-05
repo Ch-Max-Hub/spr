@@ -46,20 +46,6 @@
                                     <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="headerNav"><em class="icon ni ni-arrow-left"></em></a>
                                 </div>
                             </div>
-                            <ul class="nk-menu nk-menu-main ui-s2">
-                                {% if user.is_superuser or user|is_in_group:"Admin" %}
-                                <li class="nk-menu-item has-sub">
-                                    <a href="{% url 'add_info' %}" class="nk-menu-link">
-                                        <span class="nk-menu-text">Maglumat goş</span>
-                                    </a>
-                                </li><!-- .nk-menu-item -->
-                                <li class="nk-menu-item has-sub">
-                                    <a href="{% url 'add_info_file' %}" class="nk-menu-link">
-                                        <span class="nk-menu-text">Maglumat file ýükle</span>
-                                    </a>
-                                </li><!-- .nk-menu-item -->
-                                {% endif %}
-                            </ul><!-- .nk-menu -->
                         </div><!-- .nk-header-menu -->
                         <div class="nk-header-tools">
                             <ul class="nk-quick-nav">
@@ -101,9 +87,11 @@
                                         </div>
                                         <div class="dropdown-inner">
                                             <ul class="link-list">
-                                                {% comment %} <li><a href="html/user-profile-regular.html"><em class="icon ni ni-user-alt"></em><span>View Profile</span></a></li> {% endcomment %}
+                                                {% if user.is_superuser or user|is_in_group:"Admin" %}
+                                                <li><a href="{% url 'add_info_file' %}"><em class="icon ni ni-file-plus"></em><span>Maglumat file ýükle</span></a></li>
+                                                {% endif %}
                                                 <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
-                                                <li><a href="{% url 'logout' %} " id="logout-link"><em class="icon ni ni-signout"></em><span>Sign out</span></a></li>
+                                                <li><a href="{% url 'logout' %} " id="logout-link"><em class="icon ni ni-signout"></em><span>Çykmak</span></a></li>
                                             </ul>
                                         </div>
                                     </div>
