@@ -4,7 +4,7 @@ from django.http import HttpResponseNotAllowed
 from django.shortcuts import render
 import pandas as pd
 
-from .forms import ExcelUploadForm
+from .forms import ClientAddForm, ExcelUploadForm
 from .models import Client, UserEtrap, Etrap
 
 
@@ -26,6 +26,50 @@ def index(request):
         'clients': clients,
     }
     return render(request, 'index.html', context=context)
+
+def add_info(request):
+    user = request.user
+    if user.is_superuser:
+        # Superuser can see all clients
+        etr = Etrap.objects.all()
+    elif user.groups.filter(name='Admin').exists():
+        # Admins can see only their etrap and sub etraps
+        try:
+            _user = UserEtrap.objects.get(user=user)
+            etr = Etrap.objects.filter(Q(pk=_user.etrap.pk) | Q(parent=_user.etrap))
+        except UserEtrap.DoesNotExist:
+            etr = []
+    else:
+        return HttpResponseNotAllowed(['POST'])
+
+    if request.method == 'POST':
+        form = ClientAddForm(request.POST)
+        if form.is_valid():
+            try:
+                Client.objects.create(
+                    etrap=Etrap.objects.get(name=form.cleaned_data['etrap_name']),
+                    number=form.cleaned_data['number'],
+                    name=form.cleaned_data['name'],
+                    street=form.cleaned_data['street'],
+                    house=form.cleaned_data['house'],
+                    bloc=form.cleaned_data['bloc'],
+                    room=form.cleaned_data['room'],
+                    service=form.cleaned_data['service'],
+                    old_number=form.cleaned_data['old_number'],
+                    status=form.cleaned_data['status']
+                )
+                form = ClientAddForm()
+            except Exception as e:
+                print(e)
+    else:
+        form = ClientAddForm()
+
+    context = {
+        'title': '09 | Maglumat ýükle',
+        'form': form,
+        'etraps': etr,
+    }
+    return render(request, 'add_client_form.html', context=context)
 
 def add_info_file(request):
     user = request.user
@@ -76,4 +120,3 @@ def add_info_file(request):
 def dark_mode(request, turn_on):
     if turn_on == 0: request.session['dark_mode'] = False
     if turn_on == 1: request.session['dark_mode'] = True
-    return render(request, 'index.html')

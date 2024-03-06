@@ -6,5 +6,6 @@ from . import views
 
 urlpatterns = [
     path('', login_required(views.index), name='index'),
+    path('add-info/', login_required(views.add_info), name='add_info'),
     path('add-info-file/', login_required(views.add_info_file), name='add_info_file'),
 ]

@@ -34,6 +34,7 @@
                                 <img class="logo-dark logo-img" src="./images/logo-dark.png" srcset="./images/logo-dark2x.png 2x" alt="logo-dark">
                             </a>
                         </div><!-- .nk-header-brand -->
+                        {% if user.is_superuser or user|is_in_group:"Admin" %}
                         <div class="nk-header-menu ms-auto" data-content="headerNav">
                             <div class="nk-header-mobile">
                                 <div class="nk-header-brand">
@@ -46,7 +47,20 @@
                                     <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="headerNav"><em class="icon ni ni-arrow-left"></em></a>
                                 </div>
                             </div>
+                            <ul class="nk-menu nk-menu-main ui-s2">
+                                <li class="nk-menu-item has-sub">
+                                    <a href="{% url 'add_info' %}" class="nk-menu-link"><span class="nk-menu-text">
+                                        <span class="nk-menu-text">Maglumat ýükle</span>
+                                    </a>
+                                </li><!-- .nk-menu-item -->
+                                <li class="nk-menu-item has-sub">
+                                    <a href="{% url 'add_info_file' %}" class="nk-menu-link"><span class="nk-menu-text">
+                                        <span class="nk-menu-text">Maglumat file ýükle</span>
+                                    </a>
+                                </li><!-- .nk-menu-item -->
+                            </ul><!-- .nk-menu -->
                         </div><!-- .nk-header-menu -->
+                        {% endif %}
                         <div class="nk-header-tools">
                             <ul class="nk-quick-nav">
                                 <li class="dropdown user-dropdown">
@@ -88,6 +102,7 @@
                                         <div class="dropdown-inner">
                                             <ul class="link-list">
                                                 {% if user.is_superuser or user|is_in_group:"Admin" %}
+                                                <li><a href="{% url 'add_info' %}"><em class="icon ni ni-file-plus"></em><span>Maglumat ýükle</span></a></li>
                                                 <li><a href="{% url 'add_info_file' %}"><em class="icon ni ni-file-plus"></em><span>Maglumat file ýükle</span></a></li>
                                                 {% endif %}
                                                 <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
